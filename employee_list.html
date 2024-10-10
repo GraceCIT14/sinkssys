@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee List</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Employee List</h1>
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 border-b">Name</th>
+                    <th class="py-2 px-4 border-b">Job Title</th>
+                    <th class="py-2 px-4 border-b">Department</th>
+                    <th class="py-2 px-4 border-b">Email</th>
+                    <th class="py-2 px-4 border-b">Action</th>
+                </tr>
+            </thead>
+            <tbody id="employeeTable">
+                <!-- Rows will be inserted here by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div id="employeeModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg w-full max-w-md">
+            <h2 class="text-xl font-bold mb-4" id="modalName">Employee Info</h2>
+            <p><strong>Job Title:</strong> <span id="modalJobTitle"></span></p>
+            <p><strong>Department:</strong> <span id="modalDepartment"></span></p>
+            <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+            <p><strong>Contact No.:</strong> <span id="modalPhone"></span></p>
+            <p><strong>Address:</strong> <span id="modalAddress"></span></p>
+            <button class="mt-4 bg-blue-500 text-white py-2 px-4 rounded" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const employees = [
+            {
+                name: "Ivan Petrov",
+                jobTitle: "Software Engineer",
+                department: "Development",
+                email: "john.doe@example.com",
+                phone: "123-456-7890",
+                address: "123 Main St, Anytown, USA"
+            },
+            {
+                name: "Jane Smith",
+                jobTitle: "Project Manager",
+                department: "Operations",
+                email: "jane.smith@example.com",
+                phone: "987-654-3210",
+                address: "456 Elm St, Othertown, USA"
+            },
+            {
+                name: "Alice Johnson",
+                jobTitle: "UX Designer",
+                department: "Design",
+                email: "alice.johnson@example.com",
+                phone: "555-123-4567",
+                address: "789 Maple Ave, Sometown, USA"
+            },
+            {
+                name: "Bob Brown",
+                jobTitle: "Data Analyst",
+                department: "Analytics",
+                email: "bob.brown@example.com",
+                phone: "222-333-4444",
+                address: "101 Oak St, Newcity, USA"
+            },
+            {
+                name: "Charlie Green",
+                jobTitle: "HR Specialist",
+                department: "Human Resources",
+                email: "charlie.green@example.com",
+                phone: "333-444-5555",
+                address: "202 Pine St, Oldtown, USA"
+            }
+        ];
+
+        function populateTable() {
+            const tableBody = document.getElementById('employeeTable');
+            employees.forEach((employee, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="border-t py-2 px-4">${employee.name}</td>
+                    <td class="border-t py-2 px-4">${employee.jobTitle}</td>
+                    <td class="border-t py-2 px-4">${employee.department}</td>
+                    <td class="border-t py-2 px-4">${employee.email}</td>
+                    <td class="border-t py-2 px-4">
+                        <button class="bg-blue-500 text-white py-1 px-3 rounded" onclick="openModal(${ index})">Info</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function openModal(index) {
+            const employee = employees[index];
+            document.getElementById('modalName').textContent = employee.name;
+            document.getElementById('modalJobTitle').textContent = employee.jobTitle;
+            document.getElementById('modalDepartment').textContent = employee.department;
+            document.getElementById('modalEmail').textContent = employee.email;
+            document.getElementById('modalPhone').textContent = employee.phone;
+            document.getElementById('modalAddress').textContent = employee.address;
+            document.getElementById('employeeModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('employeeModal').classList.add('hidden');
+        }
+
+        populateTable();
+    </script>
+</body>
+</html>
